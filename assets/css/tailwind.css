@@ -3,6 +3,7 @@
 @import "tailwindcss/utilities";
 @import "./modules/searchBar.css";
 @import "./modules/weatherVar.css";
+@import "./modules/dailyForecast.scss";
 
 @font-face {
     font-family: BricolageGrotesqueBold;

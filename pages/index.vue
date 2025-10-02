@@ -95,7 +95,7 @@
             </h2>
             <div class="loc-daily-forecast-cards flex gap-6">
               <div
-                v-for="(day, idx) in dailyForecast"
+                v-for="day in dailyForecast"
                 :key="day.date"
                 class="loc-forecast-card bg-wnaNeutral800 rounded-[12px] w-[100.57px] flex flex-col items-center"
               >
@@ -118,9 +118,48 @@
               </div>
             </div>
           </div>
-          <div
-            class="hourly-forecast rounded-[12px] bg-wnaNeutral800 w-full h-auto"
-          ></div>
+          <div class="hourly-forecast">
+            <div class="hourly-header">
+              <h3>Hourly forecast</h3>
+              <select v-model="selectedDay" class="hourly-select">
+                <option
+                  v-for="(day, idx) in dailyForecast"
+                  :key="day.date"
+                  :value="idx"
+                >
+                  {{
+                    new Date(day.date).toLocaleDateString(undefined, {
+                      weekday: "long",
+                    })
+                  }}
+                </option>
+              </select>
+            </div>
+            <ul class="hours">
+              <li
+                v-for="hour in getHourlyForDay(selectedDay)"
+                :key="hour.time"
+                class="hour-item"
+              >
+                <div class="flex gap-1 justify-center items-center">
+                  <img
+                    :src="getWeatherIcon(hour.code)"
+                    class="w-[40px] h-[40px]"
+                    alt="weather icon"
+                  />
+                  <div class="hour-time">
+                    {{
+                      new Date(hour.time).getHours() % 12 === 0
+                        ? 12
+                        : new Date(hour.time).getHours() % 12
+                    }}
+                    {{ new Date(hour.time).getHours() < 12 ? "AM" : "PM" }}
+                  </div>
+                </div>
+                <div class="hour-temp">{{ toFahrenheit(hour.temp) }}°</div>
+              </li>
+            </ul>
+          </div>
         </div>
         <span v-else-if="loading">Loading...</span>
         <span v-else-if="error">{{ error }}</span>
@@ -131,6 +170,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import chevron from "~/assets/images/icons/units-dropdown-icon.svg";
 
 const city = ref("Seattle");
 const weather = ref(null);
@@ -138,6 +178,8 @@ const locationName = ref("");
 const loading = ref(false);
 const error = ref("");
 const dailyForecast = ref([]);
+const hourlyForecast = ref([]);
+const selectedDay = ref(0); // 0 = today
 
 function toFahrenheit(celsius) {
   return Math.round((celsius * 9) / 5 + 32);
@@ -148,6 +190,7 @@ async function fetchWeather(cityName) {
   error.value = "";
   weather.value = null;
   dailyForecast.value = [];
+  hourlyForecast.value = [];
 
   // Geocoding API to get coordinates
   const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
@@ -165,8 +208,8 @@ async function fetchWeather(cityName) {
   const { latitude, longitude, name, country } = geoData.results[0];
   locationName.value = `${name}, ${country}`;
 
-  // Weather API: get current and daily forecast + humidity
-  const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&hourly=relative_humidity_2m,precipitation&timezone=auto`;
+  // Weather API: get current, daily, and hourly forecast
+  const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&hourly=temperature_2m,weathercode,relative_humidity_2m,precipitation&timezone=auto`;
   const weatherRes = await fetch(weatherUrl);
   const weatherData = await weatherRes.json();
 
@@ -193,6 +236,18 @@ async function fetchWeather(cityName) {
     min: weatherData.daily.temperature_2m_min[i],
     code: weatherData.daily.weathercode[i],
   }));
+
+  // Prepare hourly forecast for next 7 days
+  hourlyForecast.value = [];
+  for (let i = 0; i < weatherData.hourly.time.length; i++) {
+    hourlyForecast.value.push({
+      time: weatherData.hourly.time[i],
+      temp: weatherData.hourly.temperature_2m[i],
+      code: weatherData.hourly.weathercode[i],
+      humidity: weatherData.hourly.relative_humidity_2m[i],
+      precipitation: weatherData.hourly.precipitation[i],
+    });
+  }
 
   loading.value = false;
 }
@@ -273,6 +328,23 @@ function getWeatherIcon(code) {
   return iconName
     ? `/_nuxt/assets/images/weather_icons/${iconName}.svg`
     : "/_nuxt/assets/images/weather_icons/unknown.svg";
+}
+
+function getHourlyForDay(dayIdx) {
+  if (!dailyForecast.value[dayIdx]) return [];
+  const dayDate = dailyForecast.value[dayIdx].date;
+  const now = new Date();
+  // Find all hours for the selected day
+  const hours = hourlyForecast.value.filter((h) => h.time.startsWith(dayDate));
+  // Find the first hour that is >= current time
+  const currentHour = now.getHours();
+  const startIdx = hours.findIndex((h) => {
+    const hour = new Date(h.time).getHours();
+    return hour >= currentHour;
+  });
+  // If not found, start from 0
+  const sliceStart = startIdx >= 0 ? startIdx : 0;
+  return hours.slice(sliceStart, sliceStart + 8);
 }
 
 // Fetch Seattle weather on mount
