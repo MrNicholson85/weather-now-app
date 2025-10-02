@@ -1,0 +1,50 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "./modules/searchBar.css";
+@import "./modules/weatherVar.css";
+
+@font-face {
+    font-family: BricolageGrotesqueBold;
+    src: local("bricolageGrotesque-bold"),
+        url(../font/BricolageGrotesque-Bold.ttf)
+}
+
+@font-face {
+    font-family: DMSansBold;
+    src: local("DMSans-Bold"),
+        url(../font/DMSans-Bold.ttf)
+}
+
+@font-face {
+    font-family: DMSansLight;
+    src: local("DMSans-Light"),
+        url(../font/DMSans-Light.ttf)
+}
+
+@font-face {
+    font-family: DMSansMedium;
+    src: local("DMSans-Medium"),
+        url(../font/DMSans-Medium.ttf)
+}
+
+@font-face {
+    font-family: DMSansSemiBold;
+    src: local("DMSans-SemiBold"),
+        url(../font/DMSans-SemiBold.ttf)
+}
+
+ /* Custom styles */
+body {
+@apply 
+    m-0 p-0
+    bg-wnaNeutral900
+    text-wnaNeutral0
+    py-12;
+}
+
+.wna-wrapper {
+    @apply w-[1216px] mx-auto grid;
+}
+
+
