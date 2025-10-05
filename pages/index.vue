@@ -1,13 +1,13 @@
 <template>
   <div>
     <h1
-      class="font-BricolageGrotesqueBold flex justify-center text-[52px] mb-[64px]"
+      class="font-BricolageGrotesqueBold flex justify-center text-center lg:text-left text-[52px] mb-[64px]"
     >
       How’s the sky looking today?
     </h1>
     <div class="wna-forecaster">
       <div class="search_menu">
-        <div class="search-icon flex relative">
+        <div class="w-full lg:w-auto flex relative">
           <img
             src="~/assets/images/icons/search-icon.svg"
             class="w-[16px] absolute left-4 top-1/2 -translate-y-1/2"
@@ -16,7 +16,7 @@
             v-model="city"
             type="text"
             placeholder="Search for a place..."
-            class="search-input text-black font-DMSansMedium text-[20px] px-4 py-2 rounded-[12px] w-[526px] bg-wnaNeutral800 before:w-[16px] before:absolute reltive pl-[52px] focus:outline-none"
+            class="search-input text-black font-DMSansMedium text-[20px] px-4 py-2 rounded-[12px] lg:w-[526px] bg-wnaNeutral800 before:w-[16px] before:absolute reltive pl-[52px] focus:outline-none"
           />
         </div>
         <button
@@ -27,10 +27,10 @@
         </button>
       </div>
       <div class="forecast-layout">
-        <div v-if="weather" class="flex gap-8">
-          <div class="feat-location-card max-w-[800px]">
+        <div v-if="weather" class="grid lg:flex gap-8">
+          <div class="feat-location-card w-full md:w-[800px]">
             <div
-              class="loc-info bg-[url('~/assets/images/desktop-hero-bg.svg')] py-[80px] px-[24px] flex justify-between relative h-[286px] align-middle bg-cover bg-no-repeat mb-[48px]"
+              class="loc-info bg-[url('~/assets/images/mobile-hero-bg.svg')] md:bg-[url('~/assets/images/desktop-hero-bg.svg')] py-7 md:py-[80px] px-[24px] grid md:flex justify-between relative h-[286px] align-middle bg-cover bg-no-repeat mb-[48px]"
             >
               <div class="info flex flex-col justify-center">
                 <div class="font-DMSansBold text-[28px] mb-3 info-header">
@@ -62,7 +62,7 @@
                 </div>
               </div>
             </div>
-            <div class="wna-weather-vars flex gap-6 mb-12 justify-between">
+            <div class="wna-weather-vars">
               <div class="var-card wna-weather-feels-like">
                 <span>Feels like:</span>
                 <p>{{ toFahrenheit(weather.temperature) }}°</p>
@@ -93,11 +93,13 @@
             <h2 class="text-[20px] mb-[20px] font-DMSansSemiBold">
               Daily forecast
             </h2>
-            <div class="loc-daily-forecast-cards flex gap-6">
+            <div
+              class="loc-daily-forecast-cards grid grid-cols-3 lg:grid-cols-none lg:flex gap-x-4 gap-y-4 lg:gap-6"
+            >
               <div
                 v-for="day in dailyForecast"
                 :key="day.date"
-                class="loc-forecast-card bg-wnaNeutral800 rounded-[12px] w-[100.57px] flex flex-col items-center"
+                class="loc-forecast-card bg-wnaNeutral800 rounded-[12px] w-full flex flex-col items-center"
               >
                 <div class="font-DMSansBold text-[20px] mb-2">
                   {{

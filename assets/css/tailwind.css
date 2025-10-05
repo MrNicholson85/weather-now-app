@@ -2,7 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "./modules/searchBar.css";
-@import "./modules/weatherVar.css";
+@import "./modules/weatherVar.scss";
 @import "./modules/dailyForecast.scss";
 
 @font-face {
@@ -45,7 +45,7 @@ body {
 }
 
 .wna-wrapper {
-    @apply w-[1216px] mx-auto grid;
+    @apply w-[375px] md:w-[720px] lg:w-[1216px] mx-auto grid p-4 md:p-0;
 }
 
 
