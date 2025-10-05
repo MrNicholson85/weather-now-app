@@ -9,7 +9,7 @@
       <div class="search_menu">
         <div class="w-full lg:w-auto flex relative">
           <img
-            src="~/assets/images/icons/search-icon.svg"
+            src="~/public/images/icons/search-icon.svg"
             class="w-[16px] absolute left-4 top-1/2 -translate-y-1/2"
           />
           <input
@@ -30,7 +30,7 @@
         <div v-if="weather" class="grid lg:flex gap-8">
           <div class="feat-location-card w-full md:w-[800px]">
             <div
-              class="loc-info bg-[url('~/assets/images/mobile-hero-bg.svg')] md:bg-[url('~/assets/images/desktop-hero-bg.svg')] py-7 md:py-[80px] px-[24px] grid md:flex justify-between relative h-[286px] align-middle bg-cover bg-no-repeat mb-[48px]"
+              class="loc-info bg-[url('~/public/images/mobile-hero-bg.svg')] md:bg-[url('~/public/images/desktop-hero-bg.svg')] py-7 md:py-[80px] px-[24px] grid md:flex justify-between relative h-[286px] align-middle bg-cover bg-no-repeat mb-[48px]"
             >
               <div class="info flex flex-col justify-center">
                 <div class="font-DMSansBold text-[28px] mb-3 info-header">
@@ -172,7 +172,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import chevron from "~/assets/images/icons/units-dropdown-icon.svg";
+import chevron from "~/public/images/icons/units-dropdown-icon.svg";
 
 const city = ref("Seattle");
 const weather = ref(null);
