@@ -1,3 +1,9 @@
 .search_menu {
-    @apply grid lg:flex lg:justify-center mb-8 w-full gap-4;
+    @apply
+    grid
+    md:flex
+    md:justify-center
+    mb-8
+    w-full
+    gap-4;
 }

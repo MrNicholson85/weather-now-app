@@ -2,7 +2,7 @@
   @apply md:flex grid grid-cols-2 md:grid-cols-none gap-6 mb-12 justify-between;
 
   .var-card {
-    @apply bg-wnaNeutral800 rounded-[12px] p-5 w-auto grid items-center gap-6 justify-start;
+    @apply bg-wnaNeutral800 rounded-[12px] p-5 w-auto md:w-full grid items-center gap-6 justify-start;
 
     span {
       @apply text-base font-DMSansMedium;

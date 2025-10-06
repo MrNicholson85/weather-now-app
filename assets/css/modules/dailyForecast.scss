@@ -1,5 +1,5 @@
 .hourly-forecast {
-  @apply rounded-[12px] p-6 bg-wnaNeutral800 w-full h-auto;
+  @apply rounded-[12px] p-6 bg-wnaNeutral800 w-full lg:w-auto h-auto;
 
   .hourly-header {
     @apply flex items-center gap-4 justify-between;

@@ -2,7 +2,7 @@
   <div>
     <header>
       <div>
-        <a href="/"><img :src="logo" class="w-[200px]" /></a>
+        <a href="/"><img :src="logo" class="w-[137px] md:w-[200px]" /></a>
       </div>
       <div
         class="flex gap-[10px] w-[119px] bg-wnaNeutral800 rounded-lg px-4 py-3 justify-center text-base font-DMSansMedium"

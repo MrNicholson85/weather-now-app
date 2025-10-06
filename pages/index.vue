@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1
-      class="font-BricolageGrotesqueBold flex justify-center text-center lg:text-left text-[52px] mb-[64px]"
+      class="font-BricolageGrotesqueBold flex justify-center text-center lg:text-left text-[52px] mb-[64px] leading-[62px] mg:leading-auto"
     >
       How’s the sky looking today?
     </h1>
@@ -16,27 +16,33 @@
             v-model="city"
             type="text"
             placeholder="Search for a place..."
-            class="search-input text-black font-DMSansMedium text-[20px] px-4 py-2 rounded-[12px] lg:w-[526px] bg-wnaNeutral800 before:w-[16px] before:absolute reltive pl-[52px] focus:outline-none"
+            class="search-input text-black font-DMSansMedium text-[20px] px-4 py-2 rounded-[12px] h-[56px] w-full md:w-[590px] lg:w-[526px] bg-wnaNeutral800 before:w-[16px] before:absolute reltive pl-[52px] focus:outline-none"
           />
         </div>
         <button
           @click="searchWeather"
-          class="bg-blue500 font-DMSansMedium text-[20px] text-white px-4 py-2 w-[114px] h-[56px] rounded-[12px]"
+          class="bg-blue500 font-DMSansMedium text-[20px] text-white px-4 py-2 w-full md:w-[114px] h-[56px] rounded-[12px]"
         >
           Search
         </button>
       </div>
       <div class="forecast-layout">
-        <div v-if="weather" class="grid lg:flex gap-8">
-          <div class="feat-location-card w-full md:w-[800px]">
+        <div v-if="weather" class="forecast-wrapper grid lg:flex gap-8">
+          <div
+            class="feat-location-card w-full rounded-[20px] overflow-hidden md:w-[720px] lg:w-[800px]"
+          >
             <div
               class="loc-info bg-[url('~/public/images/mobile-hero-bg.svg')] md:bg-[url('~/public/images/desktop-hero-bg.svg')] py-7 md:py-[80px] px-[24px] grid md:flex justify-between relative h-[286px] align-middle bg-cover bg-no-repeat mb-[48px]"
             >
               <div class="info flex flex-col justify-center">
-                <div class="font-DMSansBold text-[28px] mb-3 info-header">
+                <div
+                  class="font-DMSansBold text-[28px] mb-3 info-header text-center md:text-start"
+                >
                   {{ locationName }}
                 </div>
-                <div class="text-[18px] text-gray-300 info-date">
+                <div
+                  class="text-[18px] text-gray-300 info-date text-center md:text-start"
+                >
                   {{
                     new Date().toLocaleDateString(undefined, {
                       weekday: "long",
@@ -48,7 +54,7 @@
                 </div>
               </div>
               <div
-                class="font-DMSansMedium text-lg weather-info items-center flex"
+                class="font-DMSansMedium text-lg weather-info items-center flex justify-center"
               >
                 <div class="text-lg">
                   <img
@@ -94,14 +100,14 @@
               Daily forecast
             </h2>
             <div
-              class="loc-daily-forecast-cards grid grid-cols-3 lg:grid-cols-none lg:flex gap-x-4 gap-y-4 lg:gap-6"
+              class="loc-daily-forecast-cards grid grid-cols-3 md:grid-cols-none md:flex gap-x-4 gap-y-4 lg:gap-6"
             >
               <div
                 v-for="day in dailyForecast"
                 :key="day.date"
-                class="loc-forecast-card bg-wnaNeutral800 rounded-[12px] w-full flex flex-col items-center"
+                class="loc-forecast-card bg-wnaNeutral800 rounded-[12px] w-full flex flex-col items-center py-4"
               >
-                <div class="font-DMSansBold text-[20px] mb-2">
+                <div class="font-DMSansBold text-[20px]">
                   {{
                     new Date(day.date).toLocaleDateString(undefined, {
                       weekday: "short",
@@ -110,7 +116,7 @@
                 </div>
                 <img
                   :src="getWeatherIcon(day.code)"
-                  class="w-[64px] mb-2"
+                  class="w-[60px]"
                   alt="weather icon"
                 />
                 <ul class="font-DMSansMedium flex justify-between text-[16px]">
@@ -328,8 +334,8 @@ function getWeatherIcon(code) {
 
   const iconName = iconMap[code];
   return iconName
-    ? `/_nuxt/assets/images/weather_icons/${iconName}.svg`
-    : "/_nuxt/assets/images/weather_icons/unknown.svg";
+    ? `/_nuxt/public/images/weather_icons/${iconName}.svg`
+    : "/_nuxt/public/images/weather_icons/unknown.svg";
 }
 
 function getHourlyForDay(dayIdx) {
