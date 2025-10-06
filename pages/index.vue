@@ -180,19 +180,22 @@
 import { ref, onMounted } from "vue";
 import chevron from "~/public/images/icons/units-dropdown-icon.svg";
 
-const city = ref("Seattle");
-const weather = ref(null);
-const locationName = ref("");
-const loading = ref(false);
-const error = ref("");
-const dailyForecast = ref([]);
-const hourlyForecast = ref([]);
-const selectedDay = ref(0); // 0 = today
+// --- Reactive state variables ---
+const city = ref("Seattle"); // Default city shown on load
+const weather = ref(null); // Holds current weather data
+const locationName = ref(""); // Display name for location
+const loading = ref(false); // Loading state for API requests
+const error = ref(""); // Error message for failed requests
+const dailyForecast = ref([]); // Array of daily forecast objects
+const hourlyForecast = ref([]); // Array of hourly forecast objects
+const selectedDay = ref(0); // Index of selected day for hourly forecast (0 = today)
 
+// --- Utility: Convert Celsius to Fahrenheit, rounded to whole number ---
 function toFahrenheit(celsius) {
   return Math.round((celsius * 9) / 5 + 32);
 }
 
+// --- Main function: Fetch weather and forecast data for a city ---
 async function fetchWeather(cityName) {
   loading.value = true;
   error.value = "";
@@ -200,71 +203,75 @@ async function fetchWeather(cityName) {
   dailyForecast.value = [];
   hourlyForecast.value = [];
 
-  // Geocoding API to get coordinates
+  // 1. Geocoding: Get latitude/longitude for the city
   const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
     cityName
   )}&count=1`;
   const geoRes = await fetch(geoUrl);
   const geoData = await geoRes.json();
 
+  // If city not found, show error and stop
   if (!geoData.results || geoData.results.length === 0) {
     error.value = "City not found.";
     loading.value = false;
     return;
   }
 
+  // Extract coordinates and display name
   const { latitude, longitude, name, country } = geoData.results[0];
   locationName.value = `${name}, ${country}`;
 
-  // Weather API: get current, daily, and hourly forecast
+  // 2. Weather API: Get current, daily, and hourly forecast
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&hourly=temperature_2m,weathercode,relative_humidity_2m,precipitation&timezone=auto`;
   const weatherRes = await fetch(weatherUrl);
   const weatherData = await weatherRes.json();
 
+  // --- Current weather ---
   weather.value = weatherData.current_weather;
 
-  // Get current humidity (match current hour)
+  // Find the current hour's index in hourly data
   const now = new Date();
   const currentHour = now.getHours();
-  const hourString = now.toISOString().slice(0, 13);
+  const hourString = now.toISOString().slice(0, 13); // "YYYY-MM-DDTHH"
   const humidityIndex = weatherData.hourly.time.findIndex((t) =>
     t.startsWith(hourString)
   );
+  // Add humidity and precipitation to current weather
   weather.value.humidity =
     weatherData.hourly.relative_humidity_2m[humidityIndex] ?? null;
-
-  // Get current precipitation
   weather.value.precipitation =
     weatherData.hourly.precipitation[humidityIndex] ?? null;
 
-  // Prepare daily forecast for next 7 days
+  // --- Daily forecast: Next 7 days ---
   dailyForecast.value = Array.from({ length: 7 }, (_, i) => ({
-    date: weatherData.daily.time[i],
-    max: weatherData.daily.temperature_2m_max[i],
-    min: weatherData.daily.temperature_2m_min[i],
-    code: weatherData.daily.weathercode[i],
+    date: weatherData.daily.time[i], // ISO date string
+    max: weatherData.daily.temperature_2m_max[i], // Max temp (C)
+    min: weatherData.daily.temperature_2m_min[i], // Min temp (C)
+    code: weatherData.daily.weathercode[i], // Weather code
   }));
 
-  // Prepare hourly forecast for next 7 days
+  // --- Hourly forecast: All available hours ---
   hourlyForecast.value = [];
   for (let i = 0; i < weatherData.hourly.time.length; i++) {
     hourlyForecast.value.push({
-      time: weatherData.hourly.time[i],
-      temp: weatherData.hourly.temperature_2m[i],
-      code: weatherData.hourly.weathercode[i],
-      humidity: weatherData.hourly.relative_humidity_2m[i],
-      precipitation: weatherData.hourly.precipitation[i],
+      time: weatherData.hourly.time[i], // ISO datetime string
+      temp: weatherData.hourly.temperature_2m[i], // Temp (C)
+      code: weatherData.hourly.weathercode[i], // Weather code
+      humidity: weatherData.hourly.relative_humidity_2m[i], // Humidity (%)
+      precipitation: weatherData.hourly.precipitation[i], // Precipitation (mm)
     });
   }
 
   loading.value = false;
 }
 
+// --- Trigger weather fetch when user searches for a city ---
 function searchWeather() {
   if (!city.value) return;
   fetchWeather(city.value);
 }
 
+// --- Map Open-Meteo weather codes to human-readable descriptions ---
 function weatherDescription(code) {
   const descriptions = {
     0: "Clear sky",
@@ -299,8 +306,8 @@ function weatherDescription(code) {
   return descriptions[code] || "Unknown";
 }
 
+// --- Map weather codes to icon filenames for display ---
 function getWeatherIcon(code) {
-  // Map weather codes to icon file names
   const iconMap = {
     0: "clear-sunny",
     1: "clear-sunny",
@@ -333,16 +340,18 @@ function getWeatherIcon(code) {
   };
 
   const iconName = iconMap[code];
+  // Returns the path to the SVG icon for the weather code
   return iconName
     ? `/_nuxt/public/images/weather_icons/${iconName}.svg`
     : "/_nuxt/public/images/weather_icons/unknown.svg";
 }
 
+// --- Get 8 hourly forecast items for the selected day, starting from current hour ---
 function getHourlyForDay(dayIdx) {
   if (!dailyForecast.value[dayIdx]) return [];
   const dayDate = dailyForecast.value[dayIdx].date;
   const now = new Date();
-  // Find all hours for the selected day
+  // Filter hours for the selected day
   const hours = hourlyForecast.value.filter((h) => h.time.startsWith(dayDate));
   // Find the first hour that is >= current time
   const currentHour = now.getHours();
@@ -352,10 +361,11 @@ function getHourlyForDay(dayIdx) {
   });
   // If not found, start from 0
   const sliceStart = startIdx >= 0 ? startIdx : 0;
+  // Return 8 hours: current + next 7
   return hours.slice(sliceStart, sliceStart + 8);
 }
 
-// Fetch Seattle weather on mount
+// --- On mount, fetch weather for default city (Seattle) ---
 onMounted(() => {
   fetchWeather(city.value);
 });
