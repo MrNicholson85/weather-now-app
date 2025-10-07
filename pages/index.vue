@@ -58,7 +58,9 @@
               >
                 <div class="text-lg">
                   <img
-                    :src="getWeatherIcon(weather.weathercode)"
+                    :src="`/images/weather_icons/${getWeatherIcon(
+                      weather.weathercode
+                    )}`"
                     class="w-[120px] h-[120px]"
                     alt="weather icon"
                   />
@@ -115,7 +117,7 @@
                   }}
                 </div>
                 <img
-                  :src="getWeatherIcon(day.code)"
+                  :src="`/images/weather_icons/${getWeatherIcon(day.code)}`"
                   class="w-[60px]"
                   alt="weather icon"
                 />
@@ -151,7 +153,7 @@
               >
                 <div class="flex gap-1 justify-center items-center">
                   <img
-                    :src="getWeatherIcon(hour.code)"
+                    :src="`/images/weather_icons/${getWeatherIcon(hour.code)}`"
                     class="w-[40px] h-[40px]"
                     alt="weather icon"
                   />
@@ -341,9 +343,7 @@ function getWeatherIcon(code) {
 
   const iconName = iconMap[code];
   // Returns the path to the SVG icon for the weather code
-  return iconName
-    ? `/_nuxt/public/images/weather_icons/${iconName}.svg`
-    : "/_nuxt/public/images/weather_icons/unknown.svg";
+  return iconName ? `${iconName}.svg` : "unknown.svg";
 }
 
 // --- Get 8 hourly forecast items for the selected day, starting from current hour ---
