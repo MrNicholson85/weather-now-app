@@ -13,7 +13,7 @@
   </div>
 </template>
 <script setup>
-import logo from "~/public/images/wna-logo.svg";
+import logo from "~/public/images/wna_logo.svg";
 import unitIcon from "~/public/images/icons/units-icon.svg";
 import chevron from "~/public/images/icons/units-dropdown-icon.svg";
 </script>
