@@ -11,6 +11,7 @@
           <img
             src="~/public/images/icons/search-icon.svg"
             class="w-[16px] absolute left-4 top-1/2 -translate-y-1/2"
+            alt="search icon"
           />
           <input
             v-model="city"
