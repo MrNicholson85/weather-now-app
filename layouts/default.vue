@@ -2,9 +2,9 @@
   <div class="wna-wrapper">
     <Header />
 
-    <div>
+    <main role="main">
       <slot />
-    </div>
+    </main>
   </div>
 </template>
 <script setup>

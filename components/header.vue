@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header>
+    <header role="banner">
       <div>
         <a href="/"
           ><img
