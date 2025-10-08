@@ -12,7 +12,10 @@
       <div
         class="flex gap-[10px] w-[119px] bg-wnaNeutral800 rounded-lg px-4 py-3 justify-center text-base font-DMSansMedium"
       >
-        <img :src="unitIcon" class="w-[16px]" />Units<img :src="chevron" />
+        <img :src="unitIcon" class="w-[16px]" alt="Unit Icon" />Units<img
+          :src="chevron"
+          alt="chevron icon"
+        />
       </div>
     </header>
   </div>
