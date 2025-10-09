@@ -67,14 +67,14 @@
                   />
                 </div>
                 <div class="text-[96px] font-DMSansSemiBold font-italic">
-                  {{ toFahrenheit(weather.temperature) }}°
+                  {{ formatTemp(weather.temperature) }}
                 </div>
               </div>
             </div>
             <div class="wna-weather-vars">
               <div class="var-card wna-weather-feels-like">
                 <span>Feels like:</span>
-                <p>{{ toFahrenheit(weather.temperature) }}°</p>
+                <p>{{ formatTemp(weather.temperature) }}</p>
               </div>
               <div class="var-card wna-weather-humidity">
                 <span>Humidity:</span>
@@ -86,14 +86,14 @@
               </div>
               <div class="var-card wna-weather-wind">
                 <span>Wind:</span>
-                <p>{{ weather.windspeed }} km/h</p>
+                <p>{{ formatWind(weather.windspeed) }}</p>
               </div>
               <div class="var-card wna-weather-precipitation">
                 <span>Precipitation:</span>
                 <p>
                   {{
                     weather.precipitation !== null
-                      ? weather.precipitation + " mm"
+                      ? formatPrecip(weather.precipitation)
                       : "N/A"
                   }}
                 </p>
@@ -123,8 +123,8 @@
                   alt="weather icon"
                 />
                 <ul class="font-DMSansMedium flex justify-between text-[16px]">
-                  <li>{{ toFahrenheit(day.max) }}°</li>
-                  <li>{{ toFahrenheit(day.min) }}°</li>
+                  <li>{{ formatTemp(day.max) }}</li>
+                  <li>{{ formatTemp(day.min) }}</li>
                 </ul>
               </div>
             </div>
@@ -167,7 +167,7 @@
                     {{ new Date(hour.time).getHours() < 12 ? "AM" : "PM" }}
                   </div>
                 </div>
-                <div class="hour-temp">{{ toFahrenheit(hour.temp) }}°</div>
+                <div class="hour-temp">{{ formatTemp(hour.temp) }}°</div>
               </li>
             </ul>
           </div>
@@ -182,6 +182,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import chevron from "~/public/images/icons/units-dropdown-icon.svg";
+import { useMeasurementSystem } from "~/composables/useMeasurementSystem";
+import { useUnitSettings } from "~/composables/useUnitSettings";
+const { unitSettings } = useUnitSettings();
+const { system } = useMeasurementSystem();
 
 // --- Reactive state variables ---
 const city = ref("Seattle"); // Default city shown on load
@@ -194,8 +198,22 @@ const hourlyForecast = ref([]); // Array of hourly forecast objects
 const selectedDay = ref(0); // Index of selected day for hourly forecast (0 = today)
 
 // --- Utility: Convert Celsius to Fahrenheit, rounded to whole number ---
-function toFahrenheit(celsius) {
-  return Math.round((celsius * 9) / 5 + 32);
+function formatTemp(celsius) {
+  return unitSettings.value.temperature === "fahrenheit"
+    ? Math.round((celsius * 9) / 5 + 32) + "°F"
+    : Math.round(celsius) + "°C";
+}
+
+function formatWind(kmh) {
+  return unitSettings.value.windSpeed === "mph"
+    ? (kmh / 1.609).toFixed(1) + " mph"
+    : kmh.toFixed(1) + " km/h";
+}
+
+function formatPrecip(mm) {
+  return unitSettings.value.precipitation === "in"
+    ? (mm / 25.4).toFixed(2) + " in"
+    : mm.toFixed(1) + " mm";
 }
 
 // --- Main function: Fetch weather and forecast data for a city ---

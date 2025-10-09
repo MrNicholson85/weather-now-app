@@ -9,14 +9,7 @@
             title="Weather Now Logo"
         /></a>
       </div>
-      <div
-        class="flex gap-[10px] w-[119px] bg-wnaNeutral800 rounded-lg px-4 py-3 justify-center text-base font-DMSansMedium"
-      >
-        <img :src="unitIcon" class="w-[16px]" alt="Unit Icon" />Units<img
-          :src="chevron"
-          alt="chevron icon"
-        />
-      </div>
+      <UnitSettings />
     </header>
   </div>
 </template>
@@ -24,6 +17,7 @@
 import logo from "~/public/images/wna_logo.svg";
 import unitIcon from "~/public/images/icons/units-icon.svg";
 import chevron from "~/public/images/icons/units-dropdown-icon.svg";
+import UnitSettiungs from "~/components/UnitSettings.vue";
 </script>
 <style scoped>
 header {
