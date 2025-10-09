@@ -164,7 +164,6 @@ function openDropdown() {
 
 function closeDropdown() {
   isOpen.value = false;
-  triggerEl.value?.focus();
 }
 
 function toggleDropdown() {
