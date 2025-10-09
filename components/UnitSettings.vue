@@ -4,22 +4,22 @@
     <button
       ref="triggerEl"
       type="button"
-      class="trigger inline-flex items-center gap-2 px-3 py-2 rounded-md bg-white dark:bg-gray-700 border hover:shadow-sm"
+      class="trigger relative flex items-center justify-center gap-2 px-3 py-2 rounded-md bg-white dark:bg-gray-700 border hover:shadow-sm"
       @click="toggleDropdown"
       @keydown.enter.prevent="toggleDropdown"
       @keydown.space.prevent="toggleDropdown"
       :aria-expanded="isOpen.toString()"
       aria-haspopup="menu"
     >
-      ⚙️ Unit settings
-      <span class="chev" aria-hidden="true">▾</span>
+      <img :src="unitIcon" /> Units
+      <img :src="chevron" alt="Chevron icon" />
     </button>
 
     <!-- Dropdown Panel -->
     <div
       v-show="isOpen"
       ref="panelEl"
-      class="dropdown-panel mt-2 p-4 bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg z-50"
+      class="dropdown-panel absolute mt-2 p-4 bg-wnaNeutral800 dark:bg-gray-800 rounded-xl shadow-lg z-50"
       role="menu"
       aria-label="Unit settings"
       @keydown.esc.prevent="closeDropdown"
@@ -27,7 +27,9 @@
       <div class="space-y-6">
         <!-- 🌐 Master Unit System Switch -->
         <div>
-          <label class="block font-bold mb-2">🌍 Unit System</label>
+          <label class="block font-DMSansMedium text-base mb-2"
+            >Unit System</label
+          >
           <div class="options" role="tablist" aria-label="Unit system">
             <button
               v-for="opt in systemOptions"
@@ -42,10 +44,13 @@
             </button>
           </div>
         </div>
-
+        <span class="w-full h-[1px] bg-wnaNeutral0 flex !mt-2"></span>
         <!-- Individual Controls -->
-        <div>
-          <label class="block font-bold mb-2">🌡 Temperature</label>
+        <div class="!mt-2">
+          <label
+            class="block font-DMSansMedium text-base mb-2 text-wnaNeutral300"
+            >Temperature</label
+          >
           <div class="options" role="tablist" aria-label="Temperature unit">
             <button
               v-for="opt in temperatureOptions"
@@ -62,9 +67,12 @@
             </button>
           </div>
         </div>
-
-        <div>
-          <label class="block font-bold mb-2">💨 Wind Speed</label>
+        <span class="w-full h-[1px] bg-wnaNeutral0 flex !mt-2"></span>
+        <div class="!mt-2">
+          <label
+            class="block font-DMSansMedium text-base mb-2 text-wnaNeutral300"
+            >Wind Speed</label
+          >
           <div class="options" role="tablist" aria-label="Wind speed unit">
             <button
               v-for="opt in windOptions"
@@ -81,9 +89,12 @@
             </button>
           </div>
         </div>
-
-        <div>
-          <label class="block font-bold mb-2">🌧 Precipitation</label>
+        <span class="w-full h-[1px] bg-wnaNeutral0 flex !mt-2"></span>
+        <div class="!mt-2">
+          <label
+            class="block font-DMSansMedium text-base mb-2 text-wnaNeutral300"
+            >Precipitation</label
+          >
           <div class="options" role="tablist" aria-label="Precipitation unit">
             <button
               v-for="opt in precipOptions"
@@ -108,6 +119,8 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useUnitSettings } from "~/composables/useUnitSettings";
+import unitIcon from "~/public/images/icons/units-icon.svg";
+import chevron from "~/public/images/icons/units-dropdown-icon.svg";
 const { unitSettings, setUnit, setSystem } = useUnitSettings();
 
 function save(type, value) {
@@ -115,8 +128,8 @@ function save(type, value) {
 }
 
 const systemOptions = [
-  { value: "metric", label: "Metric (°C, km/h, mm)" },
-  { value: "imperial", label: "Imperial (°F, mph, in)" },
+  { value: "metric", label: "Metric" },
+  { value: "imperial", label: "Imperial" },
   { value: "custom", label: "Custom" },
 ];
 
@@ -126,8 +139,8 @@ const temperatureOptions = [
 ];
 
 const windOptions = [
-  { value: "kmh", label: "Kilometers/hour (km/h)" },
-  { value: "mph", label: "Miles/hour (mph)" },
+  { value: "kmh", label: "(km/h)" },
+  { value: "mph", label: "(mph)" },
 ];
 
 const precipOptions = [
@@ -192,10 +205,7 @@ function onDocKeyDown(e) {
 
 /* Trigger */
 .trigger {
-  min-width: 160px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  color: inherit;
-  font-weight: 600;
+  @apply lg:w-[119px] rounded-[8px] border-none bg-wnaNeutral800;
 }
 .trigger:focus {
   outline: 3px solid rgba(59, 130, 246, 0.25);
@@ -204,27 +214,17 @@ function onDocKeyDown(e) {
 
 /* Panel */
 .dropdown-panel {
-  min-width: 320px;
+  @apply lg:w-[214px];
 }
 
 /* reuse existing option styles */
 .options {
   display: flex;
-  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .option {
-  padding: 0.5rem 0.75rem;
-  border-radius: 10px;
-  background: white;
-  color: black;
-  font-weight: 500;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: background 0.12s, transform 0.06s;
-  min-width: 120px;
-  text-align: center;
+  @apply px-[8px] py-[10px] rounded-[8px] text-wnaNeutral0 cursor-pointer text-left w-full;
 }
 
 .option:focus {
@@ -237,13 +237,13 @@ function onDocKeyDown(e) {
 }
 
 .option--active {
-  background: #2563eb; /* blue-600 */
+  @apply bg-wnaNeutral700;
   color: white;
   border-color: transparent;
 }
 
 .dark .option {
-  background: #1f2937;
+  @apply bg-wnaNeutral800;
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
