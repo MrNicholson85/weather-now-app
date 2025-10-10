@@ -22,7 +22,7 @@
         </div>
         <button
           @click="searchWeather"
-          class="bg-blue500 font-DMSansMedium text-[20px] text-white px-4 py-2 w-full md:w-[114px] h-[56px] rounded-[12px]"
+          class="bg-orange500 dark:bg-blue500 font-DMSansMedium text-[20px] text-wnaNeutral0 px-4 py-2 w-full md:w-[114px] h-[56px] rounded-[12px]"
         >
           Search
         </button>
