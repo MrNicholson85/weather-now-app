@@ -57,4 +57,17 @@ body {
     grid
 }
 
+.gradient-bg {
+    @apply
+    w-full
+    bg-gradient-to-r
+    from-[#dc720e]
+    to-orange500
+    dark:from-blue500
+    dark:via-blue700
+    dark:to-blue700
+    rounded-[20px]
+    text-wnaNeutral0;
+}
+
 

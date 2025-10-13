@@ -1,11 +1,11 @@
 <template>
   <button @click="toggleTheme" class="theme-btn">
     <span v-if="theme !== 'dark'" class="flex items-center gap-3"
-      ><img :src="sunIcon" class="w-[20px] h-[20px]" /> Light Mode</span
-    >
-    <span v-else class="flex items-center gap-3"
-      ><img :src="moonIcon" class="w-[20px] h-[20px]" /> Dark Mode</span
-    >
+      ><img :src="sunIcon" class="w-[20px] h-[20px]"
+    /></span>
+    <span v-else class="flex items-center gap-3 h-[25px]"
+      ><img :src="moonIcon" class="w-[20px] h-[20px]"
+    /></span>
   </button>
 </template>
 

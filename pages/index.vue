@@ -8,16 +8,25 @@
     <div class="wna-forecaster">
       <div class="search_menu">
         <div class="w-full lg:w-auto flex relative">
-          <img
-            src="~/public/images/icons/search-icon.svg"
-            class="w-[16px] absolute left-4 top-1/2 -translate-y-1/2"
-            alt="search icon"
-          />
+          <span v-if="theme !== 'dark'"
+            ><img
+              src="~/public/images/icons/search-icon.svg"
+              class="w-[16px] absolute left-4 top-1/2 -translate-y-1/2"
+              alt="search icon"
+            />
+          </span>
+          <span v-else
+            ><img
+              src="~/public/images/icons/search-icon-dark.svg"
+              class="w-[16px] absolute left-4 top-1/2 -translate-y-1/2"
+              alt="search icon"
+            />
+          </span>
           <input
             v-model="city"
             type="text"
             placeholder="Search for a place..."
-            class="search-input text-black font-DMSansMedium text-[20px] px-4 py-2 rounded-[12px] h-[56px] w-full md:w-[590px] lg:w-[526px] bg-wnaNeutral800 before:w-[16px] before:absolute reltive pl-[52px] focus:outline-none"
+            class="search-input text-black font-DMSansMedium text-[20px] px-4 py-2 rounded-[12px] h-[56px] w-full md:w-[590px] lg:w-[526px] bg-wnaNeutral0 border border-wnaNeutral300 dark:border-none dark:text-wnaNeutral0 dark:bg-wnaNeutral800 before:w-[16px] before:absolute reltive pl-[52px] focus:outline-none"
           />
         </div>
         <button
@@ -33,7 +42,7 @@
             class="feat-location-card w-full rounded-[20px] overflow-hidden md:w-[720px] lg:w-[800px]"
           >
             <div
-              class="loc-info bg-[url('~/public/images/mobile-hero-bg.svg')] md:bg-[url('~/public/images/desktop-hero-bg.svg')] py-7 md:py-[80px] px-[24px] grid md:flex justify-between relative h-[286px] align-middle bg-cover bg-no-repeat mb-[48px]"
+              class="loc-info gradient-bg py-7 md:py-[80px] px-[24px] grid md:flex justify-between relative h-[286px] align-middle bg-cover bg-no-repeat mb-[48px]"
             >
               <div class="info flex flex-col justify-center">
                 <div
@@ -108,7 +117,7 @@
               <div
                 v-for="day in dailyForecast"
                 :key="day.date"
-                class="loc-forecast-card bg-wnaNeutral800 rounded-[12px] w-full flex flex-col items-center py-4"
+                class="loc-forecast-card border border-wnaNeutral300 dark:border-none bg-blue500 text-wnaNeutral0 dark:bg-wnaNeutral800 rounded-[12px] w-full flex flex-col items-center py-4"
               >
                 <div class="font-DMSansBold text-[20px]">
                   {{
