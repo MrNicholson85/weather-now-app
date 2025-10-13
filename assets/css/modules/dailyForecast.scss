@@ -1,8 +1,17 @@
 .hourly-forecast {
-  @apply rounded-[12px] p-6 bg-wnaNeutral800 w-full lg:w-auto h-auto;
+  @apply rounded-[12px]
+  p-6 
+  bg-blue500
+  dark:bg-wnaNeutral800 
+  w-full 
+  lg:w-auto 
+  h-auto;
 
   .hourly-header {
-    @apply flex items-center gap-4 justify-between;
+    @apply flex 
+    items-center 
+    gap-4 
+    justify-between;
   }
 
   .hourly-select {
@@ -12,25 +21,39 @@
     appearance-none
     bg-[url('~/public/images/icons/units-dropdown-icon.svg')]
     bg-no-repeat
-    bg-wnaNeutral600
+    bg-blue700
+    dark:bg-wnaNeutral600
     flex
     items-center
     py-2
     px-[18px]
-    min-w-[160px];
+    min-w-[160px]
+    text-wnaNeutral0;
 
     background-position: 85% 50%;
   }
 
   ul.hours {
-    @apply grid gap-4 overflow-x-auto pt-4;
+    @apply grid 
+    gap-4 
+    overflow-x-auto 
+    pt-4;
 
     li.hour-item {
-      @apply flex justify-between items-center bg-wnaNeutral600 rounded-[8px] px-4 py-[10px] min-w-[80px];
+      @apply flex 
+      justify-between 
+      items-center
+      bg-blue700
+      dark:bg-wnaNeutral600 
+      rounded-[8px] 
+      px-4 py-[10px] 
+      min-w-[80px];
 
       .hour-time,
       .hour-temp {
-        @apply font-DMSansLight text-[20px];
+        @apply font-DMSansLight 
+        text-[20px]
+        text-wnaNeutral0;
       }
     }
   }

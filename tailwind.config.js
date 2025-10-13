@@ -2,9 +2,11 @@
 module.exports = {
   content: [
     "./components/**/*.{vue,html,js}",
+    "./composables/**/*.{vue,html,js}",
     "./layouts/**/*.{vue,html,js}",
     "./pages/**/*.{vue,html,js}",
   ],
+  darkMode: "class",
   theme: {
     colors: {
       wnaNeutral900: "#02012c",

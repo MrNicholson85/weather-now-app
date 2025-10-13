@@ -11,7 +11,8 @@
       :aria-expanded="isOpen.toString()"
       aria-haspopup="menu"
     >
-      <img :src="unitIcon" /> Units
+      <img :src="unitIcon" class="flex" />
+      Units
       <img :src="chevron" alt="Chevron icon" />
     </button>
 
@@ -19,7 +20,7 @@
     <div
       v-show="isOpen"
       ref="panelEl"
-      class="dropdown-panel absolute mt-2 p-4 bg-wnaNeutral800 dark:bg-gray-800 rounded-xl shadow-lg z-50"
+      class="dropdown-panel absolute mt-2 p-4 dark:bg-wnaNeutral800 bg-wnaNeutral0 rounded-xl shadow-lg z-50"
       role="menu"
       aria-label="Unit settings"
       @keydown.esc.prevent="closeDropdown"
@@ -120,8 +121,12 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useUnitSettings } from "~/composables/useUnitSettings";
 import unitIcon from "~/public/images/icons/units-icon.svg";
+import unitIconDark from "~/public/images/icons/units-icon-dark.svg";
 import chevron from "~/public/images/icons/units-dropdown-icon.svg";
+import chevronDark from "~/public/images/icons/units-dropdown-icon-dark.svg";
 const { unitSettings, setUnit, setSystem } = useUnitSettings();
+import { useTheme } from "~/composables/useTheme";
+const { theme, toggleTheme } = useTheme();
 
 function save(type, value) {
   setUnit(type, value);
@@ -204,7 +209,7 @@ function onDocKeyDown(e) {
 
 /* Trigger */
 .trigger {
-  @apply lg:w-[119px] rounded-[8px] border-none bg-wnaNeutral800;
+  @apply lg:w-[119px] rounded-[8px] text-wnaNeutral0 border-none bg-orange500 dark:bg-wnaNeutral800;
 }
 .trigger:focus {
   outline: 3px solid rgba(59, 130, 246, 0.25);

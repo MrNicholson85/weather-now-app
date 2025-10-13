@@ -39,8 +39,9 @@
 body {
 @apply 
     m-0 p-0
-    bg-wnaNeutral900
-    text-wnaNeutral0
+    bg-wnaNeutral0
+    dark:bg-wnaNeutral900
+    dark:text-wnaNeutral0
     py-4
     lg:py-12;
 }
@@ -54,6 +55,19 @@ body {
     lg:w-[1216px]
     mx-auto
     grid
+}
+
+.gradient-bg {
+    @apply
+    w-full
+    bg-gradient-to-r
+    from-[#dc720e]
+    to-orange500
+    dark:from-blue500
+    dark:via-blue700
+    dark:to-blue700
+    rounded-[20px]
+    text-wnaNeutral0;
 }
 
 

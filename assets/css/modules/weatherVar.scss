@@ -1,15 +1,39 @@
 .wna-weather-vars {
-  @apply md:flex grid grid-cols-2 md:grid-cols-none gap-6 mb-12 justify-between;
+  @apply md:flex 
+  grid 
+  grid-cols-2 
+  md:grid-cols-none 
+  gap-6 
+  mb-12 
+  justify-between;
 
   .var-card {
-    @apply bg-wnaNeutral800 rounded-[12px] p-5 w-auto md:w-full grid items-center gap-6 justify-start;
+    @apply dark:bg-wnaNeutral800 
+    bg-blue500 
+    rounded-[12px] 
+    p-5 
+    w-auto 
+    md:w-full 
+    grid 
+    items-center 
+    gap-6 
+    justify-start
+    border
+    border-wnaNeutral200
+    dark:border-none;
 
     span {
-      @apply text-base font-DMSansMedium;
+      @apply text-base 
+      font-DMSansMedium 
+      text-wnaNeutral0 
+      dark:text-wnaNeutral0;
     }
 
     p {
-      @apply text-[32px] font-DMSansLight;
+      @apply text-[32px] 
+      font-DMSansLight 
+      text-wnaNeutral0 
+      dark:text-wnaNeutral0;
     }
   }
 }
