@@ -1,6 +1,6 @@
 <template>
   <button @click="toggleSystem" class="unit-toggle">
-    {{ system === "metric" ? "Metric (°C, km/h)" : "Imperial (°F, mph)" }}
+    {{ system === "metric" ? "Metric (°, km/h)" : "Imperial (°, mph)" }}
   </button>
 </template>
 

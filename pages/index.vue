@@ -176,7 +176,7 @@
                     {{ new Date(hour.time).getHours() < 12 ? "AM" : "PM" }}
                   </div>
                 </div>
-                <div class="hour-temp">{{ formatTemp(hour.temp) }}°</div>
+                <div class="hour-temp">{{ formatTemp(hour.temp) }}</div>
               </li>
             </ul>
           </div>
@@ -209,8 +209,8 @@ const selectedDay = ref(0); // Index of selected day for hourly forecast (0 = to
 // --- Utility: Convert Celsius to Fahrenheit, rounded to whole number ---
 function formatTemp(celsius) {
   return unitSettings.value.temperature === "fahrenheit"
-    ? Math.round((celsius * 9) / 5 + 32) + "°F"
-    : Math.round(celsius) + "°C";
+    ? Math.round((celsius * 9) / 5 + 32) + "°"
+    : Math.round(celsius) + "°";
 }
 
 function formatWind(kmh) {
