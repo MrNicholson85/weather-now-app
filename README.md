@@ -177,6 +177,42 @@ Preferences are stored in localStorage via the `useMeasurementSystem` composable
 
 This application uses the [Open-Meteo API](https://open-meteo.com/) for weather data. Open-Meteo is a free, open-source weather API that doesn't require an API key.
 
+## 🚀 Future Improvements
+
+Potential enhancements to consider for future development:
+
+### Features
+- **Geolocation Support**: Auto-detect user's location for immediate weather display
+- **Favorite Locations**: Save and manage multiple cities for quick access
+- **Weather Alerts**: Display severe weather warnings and notifications
+- **Extended Forecast**: Add 14-day forecast option
+- **Weather Maps**: Integrate radar and precipitation maps
+- **Historical Data**: Show weather trends and comparisons with previous years
+- **Air Quality Index**: Include AQI data and pollen count
+
+### User Experience
+- **Search Autocomplete**: Suggest cities as user types in search bar
+- **Recent Searches**: Display recently searched locations
+- **Shareable Links**: Generate URLs for specific city weather views
+- **Progressive Web App (PWA)**: Add offline support and install capability
+- **Animations**: Weather-based background animations and transitions
+
+### Technical Enhancements
+- **Response Caching**: Implement caching to reduce API calls and improve performance
+- **Error Handling**: Enhanced error states with retry mechanisms
+- **Loading Skeletons**: Replace loading text with skeleton components
+- **Unit Tests**: Add Vitest for component and composable testing
+- **E2E Tests**: Implement Playwright/Cypress for user flow testing
+- **Performance Monitoring**: Add analytics and performance tracking
+- **Accessibility**: WCAG 2.1 AA compliance audit and improvements
+- **Internationalization (i18n)**: Multi-language support
+
+### Data Visualization
+- **Temperature Charts**: Line graphs showing temperature trends
+- **Precipitation Graphs**: Rainfall/snowfall visualization
+- **Wind Direction Indicator**: Compass-style wind direction display
+- **UV Index Meter**: Visual UV level indicator with safety recommendations
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
